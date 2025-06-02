@@ -1,0 +1,9 @@
+<mujocoinclude>
+    <worldbody>
+        <body name="obj_box_05" pos="0.785 0.0 1.13">
+            <geom name="obj_box_05" fromto="0.0 0.0 0.04  0.0 0.0 0.0"  size="0.02" type="box" rgba="1 0.56 0.43 1"/>
+            <joint name="object_joint" type="free" damping="0.0005"/>
+        </body>
+    </worldbody>
+</mujocoinclude>
+
