@@ -2,7 +2,7 @@ import numpy as np
 import time
 from src.mujoco_parser import MuJoCoParserClass
 from src.PID import PID_ControllerClass
-from get_grasp_pose_using_ik import get_q_from_ik
+from ik import get_q_from_ik
 
 def set_gripper(desired_q, option="open"):
     """
@@ -15,9 +15,9 @@ def set_gripper(desired_q, option="open"):
     return desired_q
 
 def main():
-    # MuJoCo Panda parsing - 使用新的环境文件
-    xml_path = 'asset/panda/franka_panda_ghm.xml'  # 新环境
-    env = MuJoCoParserClass(name='Panda_GHM', rel_xml_path=xml_path, VERBOSE=False)
+    # MuJoCo Panda parsing
+    xml_path = 'asset/panda/franka_panda_ghm.xml'
+    env = MuJoCoParserClass(name='Panda', rel_xml_path=xml_path, VERBOSE=False)
     env.forward()
 
     # Select the last 9 indices for Panda robot joints
@@ -29,7 +29,7 @@ def main():
     pre_grasp_q, rotate_eef_q_lst, move_down_q_1_lst, move_down_q_2_lst = ik_positions
     
     # Initialize MuJoCo viewer
-    env.init_viewer(viewer_title="GHM Robot Control - Box Manipulation", viewer_width=1600, viewer_height=900,
+    env.init_viewer(viewer_title="Robot Control - Box Manipulation", viewer_width=1600, viewer_height=900,
                     viewer_hide_menus=False)
     env.update_viewer(cam_id=0)
     env.reset()
@@ -39,7 +39,7 @@ def main():
 
     # Initialize PID controller for joint control (only last 9 joints)
     PID = PID_ControllerClass(
-        name='PID_GHM',  
+        name='PID',  
         dim=9,  # 7 arm joints + 2 gripper joints
         k_p=400.0,
         k_i=10.0,
@@ -64,7 +64,7 @@ def main():
         {"task": "return_with_open", "desired_q": pre_grasp_q, "gripper": "open"}
     ]
 
-    print("=== GHM Box Manipulation Task ===")
+    print("=== Box Manipulation Task ===")
  
     
     # Initialize scene and wait for stability
